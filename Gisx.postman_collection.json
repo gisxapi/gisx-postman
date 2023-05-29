@@ -1,0 +1,671 @@
+{
+	"info": {
+		"_postman_id": "04358471-012c-4110-91cb-693dd37513bf",
+		"name": "Gisx",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26984816",
+		"_collection_link": "https://mtl-api.postman.co/workspace/GISX-API~c42e117e-dee1-4498-96ff-1ee81e11d0fe/collection/26984816-04358471-012c-4110-91cb-693dd37513bf?action=share&creator=26984816&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "Api gateway",
+			"item": [
+				{
+					"name": "product-service",
+					"item": [
+						{
+							"name": "Get Product List",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"limit\": 10,\n    \"page\": 1,\n    \"date\": \"2023-07-01\",\n    \"root_id\": \"\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host-api-gateway}}/product/list",
+									"host": [
+										"{{host-api-gateway}}"
+									],
+									"path": [
+										"product",
+										"list"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "policy-service",
+					"item": [
+						{
+							"name": "Get List",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"limit\": 10,\n    \"page\": 1,\n    \"date\": \"2023-07-01\",\n    \"root_id\": \"\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host-api-gateway}}/policy/under",
+									"host": [
+										"{{host-api-gateway}}"
+									],
+									"path": [
+										"policy",
+										"under"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "common",
+					"item": [
+						{
+							"name": "Update Mapping Message",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{host-api-gateway}}/common/message",
+									"host": [
+										"{{host-api-gateway}}"
+									],
+									"path": [
+										"common",
+										"message"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Health",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host-api-gateway}}/healthz",
+							"host": [
+								"{{host-api-gateway}}"
+							],
+							"path": [
+								"healthz"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.globals.set(\"service\", \"/gateway\");"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Product-service",
+			"item": [
+				{
+					"name": "Health",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host-product}}/healthz",
+							"host": [
+								"{{host-product}}"
+							],
+							"path": [
+								"healthz"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Mapping message",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host-product}}{{service}}/message",
+							"host": [
+								"{{host-product}}{{service}}"
+							],
+							"path": [
+								"message"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Product",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"12345\",\n    \"product_code\": \"PC001\",\n    \"object_id\": \"NICK_OBJ_1\",\n    \"plan_codes\": [\n        {\n            \"plan_code\": \"PL001\",\n            \"id\": \"P12345\",\n            \"object_id\": \"NICK_OBJ_1\",\n            \"benefits\": [\n                {\n                    \"id\": \"B12345\",\n                    \"benefit_code\": \"BC001\",\n                    \"object_id\": \"NICK_OBJ_1_01\",\n                    \"detail\": {\n                        \"ref_code\": \"\",\n                        \"benefit_type\": \"Health\",\n                        \"benefit_sub_type\": \"OPD\",\n                        \"type\": \"core\",\n                        \"name\": {\n                            \"th_TH\": \"ทันตกรรม updated\",\n                            \"en_US\": \"Dental Health Care\"\n                        },\n                        \"remark\": {\n                            \"th_TH\": \"ชื่อภาษาไทย\",\n                            \"en_US\": \"name in english\"\n                        },\n                        \"waiting_periods\": \"45 วัน\",\n                        \"share_benefit\": false,\n                        \"share_benefit_max_amount\": \"\",\n                        \"display_amount\": \"ใช้สูตร 24 * salary\",\n                        \"benefit_limit_per\":\"per year\",\n                        \"premium_amount\": \"sum-insure/1000\",\n                        \"relation_benefit\": false,\n                        \"relation_type\": \"Subset\",\n                        \"health_opd_dental_amount\": \"5000\"\n                    },\n                    \"parent_object_id\": \"\",\n                    \"node_type\": \"Benefit\",\n                    \"action\": \"CREATE\"\n                },\n                {\n                    \"id\": \"B12345_2\",\n                    \"benefit_code\": \"BC002\",\n                    \"object_id\": \"NICK_OBJ_1_02\",\n                    \"detail\": {\n                        \"ref_code\": \"\",\n                        \"benefit_type\": \"Health\",\n                        \"benefit_sub_type\": \"OPD\",\n                        \"type\": \"core\",\n                        \"name\": {\n                            \"th_TH\": \"ค่ารักษาพยาบาลผู้ป่วยนอก\",\n                            \"en_US\": \"health opd amount\"\n                        },\n                        \"remark\": {\n                            \"th_TH\": \"ชื่อภาษาไทย\",\n                            \"en_US\": \"name in english\"\n                        },\n                        \"waiting_periods\": \"45 วัน\",\n                        \"share_benefit\": false,\n                        \"share_benefit_max_amount\": \"\",\n                        \"display_amount\": \"ใช้สูตร 24 * salary\",\n                        \"benefit_limit_per\":\"per year\",\n                        \"premium_amount\": \"sum-insure/1000\",\n                        \"relation_benefit\": false,\n                        \"relation_type\": \"Subset\",\n                        \"health_opd_amount\": \"15000\"\n                    },\n                    \"parent_object_id\": \"\",\n                    \"node_type\": \"Benefit\",\n                    \"action\": \"CREATE\"\n                }\n            ],\n            \"name\": {\n                \"th_TH\": \"แผนที่ 1\",\n                \"en_US\": \"plan 1\"\n            },\n            \"description\": \"แผนทดสอบ\",\n            \"age\": {\n                \"min_age\": 70,\n                \"max_age\": 50\n            },\n            \"sale_status\": {\n                \"status\": true\n            },\n            \"parent_object_id\": \"\",\n            \"position\": {\n                \"x\": 1,\n                \"y\": 2\n            },\n            \"node_type\": \"Plan\",\n            \"action\": \"CREATE\",\n            \"active\": true,\n            \"version\": 1,\n            \"create_date\": \"\",\n            \"update_date\": null\n        },\n        {\n            \"plan_code\": \"PL001-1\",\n            \"id\": \"P12345_2\",\n            \"object_id\": \"NICK_OBJ_2\",\n            \"benefits\": [\n                {\n                    \"id\": \"B12345_2\",\n                    \"benefit_code\": \"BC001-1\",\n                    \"object_id\": \"NICK_OBJ_2_01\",\n                    \"detail\": {\n                        \"health_opd_dental_amount\": \"5000\"\n                    },\n                    \"parent_object_id\": \"BC_OBJ_001\",\n                    \"node_type\": \"Benefit\",\n                    \"action\": \"CREATE\"\n                }\n            ],\n            \"name\": {\n                \"th_TH\": \"แผนที่ 1\",\n                \"en_US\": \"plan 1\"\n            },\n            \"description\": \"แผนทดสอบ\",\n            \"age\": {\n                \"min_age\": 70,\n                \"max_age\": 50\n            },\n            \"sale_status\": {\n                \"status\": true\n            },\n            \"parent_object_id\": \"PL_OBJ_001\",\n            \"position\": {\n                \"x\": 1,\n                \"y\": 3\n            },\n            \"node_type\": \"Plan\",\n            \"action\": \"CREATE\",\n            \"active\": true,\n            \"version\": 1,\n            \"create_date\": \"\",\n            \"update_date\": null\n        }\n    ],\n    \"currency\": \"THB\",\n    \"name\": {\n        \"th_TH\": \"ชื่อ product ภาษาไทย\",\n        \"en_US\": \"ชื่อ product ภาษาอังกฤษ\"\n    },\n    \"type\": \"Group\",\n    \"description\": \"คำอธิบาย product\",\n    \"sale_status\": {\n        \"status\": true,\n        \"start_date\": \"2023-01-01\",\n        \"end_date\": \"2024-01-02\"\n    },\n    \"node_type\": \"Product\",\n    \"position\": {\n        \"x\": 1,\n        \"y\": 1\n    },\n    \"action\": \"CREATE\",\n    \"update_detail\": \"\",\n    \"active\": true,\n    \"create_date\": \"\",\n    \"update_date\": null\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host-product}}{{service}}",
+							"host": [
+								"{{host-product}}{{service}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create Product",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"12345\",\n    \"product_code\": \"PC001\",\n    \"object_id\": \"PC_OBJ_001\",\n    \"plan_codes\": [\n        {\n            \"plan_code\": \"PL001\",\n            \"id\": \"P12345\",\n            \"object_id\": \"NICK_OBJ_1\",\n            \"benefits\": [\n                {\n                    \"id\": \"B12345\",\n                    \"benefit_code\": \"BC001\",\n                    \"object_id\": \"NICK_OBJ_1_01\",\n                    \"detail\": {\n                        \"ref_code\": \"\",\n                        \"benefit_type\": \"Health\",\n                        \"benefit_sub_type\": \"OPD\",\n                        \"type\": \"core\",\n                        \"name\": {\n                            \"th_TH\": \"ทันตกรรม updated\",\n                            \"en_US\": \"Dental Health Care\"\n                        },\n                        \"remark\": {\n                            \"th_TH\": \"ชื่อภาษาไทย\",\n                            \"en_US\": \"name in english\"\n                        },\n                        \"waiting_periods\": \"45 วัน\",\n                        \"share_benefit\": false,\n                        \"share_benefit_max_amount\": \"\",\n                        \"display_amount\": \"ใช้สูตร 24 * salary\",\n                        \"benefit_limit_per\":\"per year\",\n                        \"premium_amount\": \"sum-insure/1000\",\n                        \"relation_benefit\": false,\n                        \"relation_type\": \"Subset\",\n                        \"health_opd_dental_amount\": \"5000\"\n                    },\n                    \"parent_object_id\": \"\",\n                    \"node_type\": \"Benefit\",\n                    \"action\": \"CREATE\"\n                },\n                {\n                    \"id\": \"B12345_2\",\n                    \"benefit_code\": \"BC002\",\n                    \"object_id\": \"NICK_OBJ_1_02\",\n                    \"detail\": {\n                        \"ref_code\": \"\",\n                        \"benefit_type\": \"Health\",\n                        \"benefit_sub_type\": \"OPD\",\n                        \"type\": \"core\",\n                        \"name\": {\n                            \"th_TH\": \"ค่ารักษาพยาบาลผู้ป่วยนอก\",\n                            \"en_US\": \"health opd amount\"\n                        },\n                        \"remark\": {\n                            \"th_TH\": \"ชื่อภาษาไทย\",\n                            \"en_US\": \"name in english\"\n                        },\n                        \"waiting_periods\": \"45 วัน\",\n                        \"share_benefit\": false,\n                        \"share_benefit_max_amount\": \"\",\n                        \"display_amount\": \"ใช้สูตร 24 * salary\",\n                        \"benefit_limit_per\":\"per year\",\n                        \"premium_amount\": \"sum-insure/1000\",\n                        \"relation_benefit\": false,\n                        \"relation_type\": \"Subset\",\n                        \"health_opd_amount\": \"15000\"\n                    },\n                    \"parent_object_id\": \"\",\n                    \"node_type\": \"Benefit\",\n                    \"action\": \"CREATE\"\n                }\n            ],\n            \"name\": {\n                \"th_TH\": \"แผนที่ 1\",\n                \"en_US\": \"plan 1\"\n            },\n            \"description\": \"แผนทดสอบ\",\n            \"age\": {\n                \"min_age\": 70,\n                \"max_age\": 50\n            },\n            \"sale_status\": {\n                \"status\": true\n            },\n            \"parent_object_id\": \"\",\n            \"position\": {\n                \"x\": 1,\n                \"y\": 2\n            },\n            \"node_type\": \"Plan\",\n            \"action\": \"CREATE\",\n            \"active\": true,\n            \"version\": 1,\n            \"create_date\": \"\",\n            \"update_date\": null\n        },\n        {\n            \"plan_code\": \"PL001-1\",\n            \"id\": \"P12345_2\",\n            \"object_id\": \"PL_OBJ_002\",\n            \"benefits\": [\n                {\n                    \"id\": \"B12345_2\",\n                    \"benefit_code\": \"BC001-1\",\n                    \"object_id\": \"BC_OBJ_001_2\",\n                    \"detail\": {\n                        \"health_opd_dental_amount\": \"5000\"\n                    },\n                    \"parent_object_id\": \"BC_OBJ_001\",\n                    \"node_type\": \"Benefit\",\n                    \"action\": \"CREATE\"\n                }\n            ],\n            \"name\": {\n                \"th_TH\": \"แผนที่ 1\",\n                \"en_US\": \"plan 1\"\n            },\n            \"description\": \"แผนทดสอบ\",\n            \"age\": {\n                \"min_age\": 70,\n                \"max_age\": 50\n            },\n            \"sale_status\": {\n                \"status\": true\n            },\n            \"parent_object_id\": \"PL_OBJ_001\",\n            \"position\": {\n                \"x\": 1,\n                \"y\": 3\n            },\n            \"node_type\": \"Plan\",\n            \"action\": \"CREATE\",\n            \"active\": true,\n            \"version\": 1,\n            \"create_date\": \"\",\n            \"update_date\": null\n        }\n    ],\n    \"currency\": \"THB\",\n    \"name\": {\n        \"th_TH\": \"ชื่อ product ภาษาไทย\",\n        \"en_US\": \"ชื่อ product ภาษาอังกฤษ\"\n    },\n    \"type\": \"Group\",\n    \"description\": \"คำอธิบาย product\",\n    \"sale_status\": {\n        \"status\": true,\n        \"start_date\": \"2023-01-01\",\n        \"end_date\": \"2024-01-02\"\n    },\n    \"node_type\": \"Product\",\n    \"position\": {\n        \"x\": 1,\n        \"y\": 1\n    },\n    \"action\": \"CREATE\",\n    \"update_detail\": \"\",\n    \"active\": true,\n    \"create_date\": \"\",\n    \"update_date\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host-product}}{{service}}",
+									"host": [
+										"{{host-product}}{{service}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 26 Apr 2023 02:49:28 GMT"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"response\": {\n        \"date\": \"2023-04-26 09:49:28\",\n        \"status\": {\n            \"code\": \"0\",\n            \"description\": \"Success\"\n        }\n    },\n    \"data\": {\n        \"id\": \"2023042609492853870D\",\n        \"object_id\": \"PC_OBJ_001\",\n        \"product_code\": \"PC001\",\n        \"plan_codes\": [\n            {\n                \"id\": \"2023042609492801BF5E\",\n                \"object_id\": \"NICK_OBJ_1\",\n                \"plan_code\": \"PL001\",\n                \"benefits\": [\n                    {\n                        \"id\": \"202304260949286B0800\",\n                        \"object_id\": \"NICK_OBJ_1_01\",\n                        \"benefit_code\": \"BC001\",\n                        \"detail\": {\n                            \"ref_code\": \"\",\n                            \"benefit_type\": \"Health\",\n                            \"benefit_sub_type\": \"OPD\",\n                            \"type\": \"core\",\n                            \"name\": {\n                                \"th_TH\": \"ทันตกรรม updated\",\n                                \"en_US\": \"Dental Health Care\"\n                            },\n                            \"remark\": {\n                                \"th_TH\": \"ชื่อภาษาไทย\",\n                                \"en_US\": \"name in english\"\n                            },\n                            \"waiting_periods\": \"45 วัน\",\n                            \"share_benefit\": false,\n                            \"share_benefit_max_amount\": \"\",\n                            \"relation_benefit\": false,\n                            \"relation_type\": \"Subset\",\n                            \"select_benefit\": null,\n                            \"display_amount\": \"ใช้สูตร 24 * salary\",\n                            \"premium_amount\": \"sum-insure/1000\",\n                            \"benefit_limit_per\": \"per year\",\n                            \"life_deadth_amount\": null,\n                            \"health_opd_amount\": null,\n                            \"health_opd_dental_amount\": \"5000\",\n                            \"health_ipd_amount\": null,\n                            \"health_ipd_room_and_board_amount\": null,\n                            \"health_ipd_surgery_amount\": null\n                        },\n                        \"parent_object_id\": \"\",\n                        \"action\": \"CREATE\",\n                        \"node_type\": \"Benefit\"\n                    },\n                    {\n                        \"id\": \"202304260949289B62F4\",\n                        \"object_id\": \"NICK_OBJ_1_02\",\n                        \"benefit_code\": \"BC002\",\n                        \"detail\": {\n                            \"ref_code\": \"\",\n                            \"benefit_type\": \"Health\",\n                            \"benefit_sub_type\": \"OPD\",\n                            \"type\": \"core\",\n                            \"name\": {\n                                \"th_TH\": \"ค่ารักษาพยาบาลผู้ป่วยนอก\",\n                                \"en_US\": \"health opd amount\"\n                            },\n                            \"remark\": {\n                                \"th_TH\": \"ชื่อภาษาไทย\",\n                                \"en_US\": \"name in english\"\n                            },\n                            \"waiting_periods\": \"45 วัน\",\n                            \"share_benefit\": false,\n                            \"share_benefit_max_amount\": \"\",\n                            \"relation_benefit\": false,\n                            \"relation_type\": \"Subset\",\n                            \"select_benefit\": null,\n                            \"display_amount\": \"ใช้สูตร 24 * salary\",\n                            \"premium_amount\": \"sum-insure/1000\",\n                            \"benefit_limit_per\": \"per year\",\n                            \"life_deadth_amount\": null,\n                            \"health_opd_amount\": \"15000\",\n                            \"health_opd_dental_amount\": null,\n                            \"health_ipd_amount\": null,\n                            \"health_ipd_room_and_board_amount\": null,\n                            \"health_ipd_surgery_amount\": null\n                        },\n                        \"parent_object_id\": \"\",\n                        \"action\": \"CREATE\",\n                        \"node_type\": \"Benefit\"\n                    }\n                ],\n                \"name\": {\n                    \"th_TH\": \"แผนที่ 1\",\n                    \"en_US\": \"plan 1\"\n                },\n                \"description\": \"แผนทดสอบ\",\n                \"age\": {\n                    \"min_age\": 70,\n                    \"max_age\": 50\n                },\n                \"sale_status\": {\n                    \"status\": true\n                },\n                \"position\": {\n                    \"x\": 1,\n                    \"y\": 2\n                },\n                \"parent_object_id\": \"\",\n                \"action\": \"CREATE\",\n                \"node_type\": \"Plan\",\n                \"active\": true,\n                \"version\": 1,\n                \"create_date\": \"2023-04-26T09:49:28+07:00\",\n                \"update_date\": null\n            },\n            {\n                \"id\": \"202304260949280BD398\",\n                \"object_id\": \"PL_OBJ_002\",\n                \"plan_code\": \"PL001-1\",\n                \"benefits\": [\n                    {\n                        \"id\": \"20230426094928CF4E02\",\n                        \"object_id\": \"BC_OBJ_001_2\",\n                        \"benefit_code\": \"BC001-1\",\n                        \"detail\": {\n                            \"ref_code\": \"\",\n                            \"benefit_type\": \"\",\n                            \"benefit_sub_type\": \"\",\n                            \"type\": \"\",\n                            \"name\": {\n                                \"th_TH\": null,\n                                \"en_US\": null\n                            },\n                            \"remark\": {\n                                \"th_TH\": null,\n                                \"en_US\": null\n                            },\n                            \"waiting_periods\": \"\",\n                            \"share_benefit\": null,\n                            \"share_benefit_max_amount\": null,\n                            \"relation_benefit\": null,\n                            \"relation_type\": null,\n                            \"select_benefit\": null,\n                            \"display_amount\": null,\n                            \"premium_amount\": null,\n                            \"benefit_limit_per\": null,\n                            \"life_deadth_amount\": null,\n                            \"health_opd_amount\": null,\n                            \"health_opd_dental_amount\": \"5000\",\n                            \"health_ipd_amount\": null,\n                            \"health_ipd_room_and_board_amount\": null,\n                            \"health_ipd_surgery_amount\": null\n                        },\n                        \"parent_object_id\": \"BC_OBJ_001\",\n                        \"action\": \"CREATE\",\n                        \"node_type\": \"Benefit\"\n                    }\n                ],\n                \"name\": {\n                    \"th_TH\": \"แผนที่ 1\",\n                    \"en_US\": \"plan 1\"\n                },\n                \"description\": \"แผนทดสอบ\",\n                \"age\": {\n                    \"min_age\": 70,\n                    \"max_age\": 50\n                },\n                \"sale_status\": {\n                    \"status\": true\n                },\n                \"position\": {\n                    \"x\": 1,\n                    \"y\": 3\n                },\n                \"parent_object_id\": \"PL_OBJ_001\",\n                \"action\": \"CREATE\",\n                \"node_type\": \"Plan\",\n                \"active\": true,\n                \"version\": 1,\n                \"create_date\": \"2023-04-26T09:49:28+07:00\",\n                \"update_date\": null\n            }\n        ],\n        \"currency\": \"THB\",\n        \"name\": {\n            \"th_TH\": \"ชื่อ product ภาษาไทย\",\n            \"en_US\": \"ชื่อ product ภาษาอังกฤษ\"\n        },\n        \"type\": \"Group\",\n        \"description\": \"คำอธิบาย product\",\n        \"sale_status\": {\n            \"status\": true,\n            \"start_date\": \"2023-01-01\",\n            \"end_date\": \"2024-01-02\"\n        },\n        \"node_type\": \"Product\",\n        \"update_detail\": \"\",\n        \"position\": {\n            \"x\": 1,\n            \"y\": 1\n        },\n        \"action\": \"CREATE\",\n        \"active\": true,\n        \"create_date\": \"2023-04-26T09:49:28+07:00\",\n        \"update_date\": \"2023-04-26T09:49:28+07:00\"\n    },\n    \"error\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Product By Product_Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host-product}}{{service}}/NICK_OBJ_1",
+							"host": [
+								"{{host-product}}{{service}}"
+							],
+							"path": [
+								"NICK_OBJ_1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Product By Product_Id with Date",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host-product}}{{service}}/NICK_OBJ_1/2024-01-01",
+							"host": [
+								"{{host-product}}{{service}}"
+							],
+							"path": [
+								"NICK_OBJ_1",
+								"2024-01-01"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Product",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"limit\": 10,\n    \"page\": 1,\n    \"date\":\"2023-01-01\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host-product}}{{service}}/list",
+							"host": [
+								"{{host-product}}{{service}}"
+							],
+							"path": [
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Set Product Inactive",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"pks\": [\n        {\n            \"id\": \"202304241542239753BC\",\n            \"object_id\": \"PC_OBJ_001_pich\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host-product}}{{service}}/inactivate",
+							"host": [
+								"{{host-product}}{{service}}"
+							],
+							"path": [
+								"inactivate"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.globals.set(\"service\", \"/product\");"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Policy-service",
+			"item": [
+				{
+					"name": "Health",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host-policy}}/healthz",
+							"host": [
+								"{{host-policy}}"
+							],
+							"path": [
+								"healthz"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Mapping message",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host-policy}}{{service}}/message",
+							"host": [
+								"{{host-policy}}{{service}}"
+							],
+							"path": [
+								"message"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Policy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Ton\",\n    \"version_id\": 1,\n    \"contract_id\": \"\",\n    \"contract_info\": {\n        \"name\": \"Employee 01\",\n        \"address\": \"30/40 A Road\"\n    },\n    \"coverage\": {\n        \"life\": {\n            \"coverage\": 1000000.00\n        },\n        \"pa\": {\n            \"coverage\": 100000.00\n        },\n        \"health\": {\n            \"coverage\": 25000.00\n        }\n    },\n    \"effective_date\": \"2023-01-01\",\n    \"expiration_date\": \"2023-12-31\",\n    \"root_id\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host-policy}}{{service}}",
+							"host": [
+								"{{host-policy}}{{service}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create New Policy Version",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Ton\",\n    \"version_id\": 1,\n    \"contract_id\": \"\",\n    \"contract_info\": {\n        \"name\": \"Employee 01\",\n        \"address\": \"30/40 A Road\"\n    },\n    \"coverage\": {\n        \"life\": {\n            \"coverage\": 1000000.00\n        },\n        \"pa\": {\n            \"coverage\": 100000.00\n        },\n        \"health\": {\n            \"coverage\": 25000.00\n        }\n    },\n    \"effective_date\": \"2023-01-01\",\n    \"expiration_date\": \"2023-12-31\",\n    \"root_id\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host-policy}}{{service}}",
+							"host": [
+								"{{host-policy}}{{service}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Policy Under Root",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"limit\":10,\n    \"page\":1,\n    \"date\":\"2023-07-01\",\n    \"root_id\":\"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host-policy}}{{service}}/under",
+							"host": [
+								"{{host-policy}}{{service}}"
+							],
+							"path": [
+								"under"
+							],
+							"query": [
+								{
+									"key": "next-key",
+									"value": "42D60CE79AFC407490EDA3715173CF23-78A5A8E222D34B13AFAEC420A09DC877",
+									"description": "id-contract_id",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Policy By Contract_id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Date",
+								"value": "2023-02-01",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{host-policy}}{{service}}/98CD543B9DE24029B34F7E10AB1B75E0/2023-07-01",
+							"host": [
+								"{{host-policy}}{{service}}"
+							],
+							"path": [
+								"98CD543B9DE24029B34F7E10AB1B75E0",
+								"2023-07-01"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.globals.set(\"service\", \"/policy\");"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Tariff-service",
+			"item": [
+				{
+					"name": "Life",
+					"item": [
+						{
+							"name": "Blend Rate",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"female\": 10,\n    \"male\": 90,\n    \"age_average\": 35,\n    \"discount\": 15,\n    \"sum_assure\": 10000000\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host-tariff}}{{service}}/life/blend_rate",
+									"host": [
+										"{{host-tariff}}{{service}}"
+									],
+									"path": [
+										"life",
+										"blend_rate"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "CI",
+					"item": [
+						{
+							"name": "CI + 30 โรค",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"sex\": \"f\",\n    \"age\": 35,\n    \"sum_assure\": 10000000\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host-tariff}}{{service}}/ci/30plus",
+									"host": [
+										"{{host-tariff}}{{service}}"
+									],
+									"path": [
+										"ci",
+										"30plus"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Health",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host-tariff}}/healthz",
+							"host": [
+								"{{host-tariff}}"
+							],
+							"path": [
+								"healthz"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Mapping message",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host-tariff}}{{service}}/message",
+							"host": [
+								"{{host-tariff}}{{service}}"
+							],
+							"path": [
+								"message"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.globals.set(\"service\", \"/tariff\");"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	]
+}
